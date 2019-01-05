@@ -2,7 +2,7 @@
     <div id="fertilizer">
         <el-container>
             <el-main>
-                <el-button @click="dialogVisible = true" type="primary">添加培肥配药</el-button>
+                <el-button @click="dialogVisible = true" type="primary" plain>添加培肥配药</el-button>
                 <el-table :data="fertilizers" style="width: 100%;">
                     <el-table-column prop="fdate" label="日期" sortable></el-table-column>
                     <el-table-column prop="fname" label="名称"></el-table-column>
@@ -10,8 +10,9 @@
                     <el-table-column prop="lossRate" label="总质量损失率(%)"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="viewIngredient(scope.row)" type="primary" size="small">查看配料</el-button>
-                            <el-button @click="removeFI(scope.row)" type="danger" size="small">删除</el-button>
+                            <el-button @click="viewIngredient(scope.row)" type="primary" size="small" plain>查看配料
+                            </el-button>
+                            <el-button @click="removeFI(scope.row)" type="danger" size="small" plain>删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

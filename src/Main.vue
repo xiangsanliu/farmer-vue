@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" active-text-color="#ffffff"
-                 background-color="#409eff" text-color="#fff">
+                 background-color="#324057" text-color="#cbcfd4">
             <el-menu-item index="1" v-if="userType === 1 || userType === 2"
                           @click="router.replace('/land')">
                 土地管理
