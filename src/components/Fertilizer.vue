@@ -114,10 +114,15 @@
         },
         methods: {
             reloadDate: function () {
+                let _this = this;
                 this.$http.get('/api/getAllFertilizersAndIngredients').then(function (response) {
-                    let resp = response.body.content;
-                    this.ingredients = resp.ingredients;
-                    this.fertilizers = resp.fertilizers;
+                    let resp = response.body;
+                    if (resp && resp.status === 200) {
+                        _this.ingredients = resp.content.ingredients;
+                        _this.fertilizers = resp.content.fertilizers;
+                    } else {
+                        _this.handleResponseError(resp, _this);
+                    }
                 })
             },
             clearForm: function () {
@@ -159,16 +164,19 @@
             createFI: function () {
                 this.dialogVisible = false;
                 let data = this.form;
+                let _this = this;
                 this.$http.post('/api/createFI', data).then(function (response) {
                     let resp = response.body;
-                    this.$message({
-                        type: 'success',
-                        message: resp.msg
-                    });
-                    if (200 === resp.status) {
-                        this.reloadDate();
-                        this.clearForm();
+                    if (resp && resp.status === 200) {
+                        _this.$message({
+                            type: 'success',
+                            message: resp.msg
+                        });
+                        _this.reloadDate();
+                    } else {
+                        _this.handleResponseError(resp, _this);
                     }
+                    _this.clearForm();
                 });
             },
             removeFI: function (row) {
@@ -179,13 +187,18 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(function () {
-                    _this.$http.post('/api/removeFI', fId).then(function (value) {
-                        let resp = value.body;
-                        _this.$message({
-                            type: 'success',
-                            message: resp.msg
-                        });
-                        _this.reloadDate();
+                    _this.$http.post('/api/removeFI', fId).then(function (response) {
+                        let resp = response.body;
+                        if (resp && resp.status === 200) {
+                            _this.$message({
+                                type: 'success',
+                                message: resp.msg
+                            });
+                            _this.reloadDate();
+                        } else {
+                            _this.handleResponseError(resp, _this);
+                        }
+
                     })
                 }).catch(function () {
                     _this.$message({
@@ -197,8 +210,13 @@
             viewIngredient: function (row) {
                 let _this = this;
                 _this.ingredientsFromFertilizer = null;
-                this.$http.post('/api/getIngredientsByFertilizer', row.id).then(function (value) {
-                    this.ingredientsFromFertilizer = value.body.content;
+                this.$http.post('/api/getIngredientsByFertilizer', row.id).then(function (response) {
+                    let resp = response.body;
+                    if (resp && resp.status === 200) {
+                        this.ingredientsFromFertilizer = resp.content;
+                    } else {
+                        _this.handleResponseError(resp, _this);
+                    }
                     this.dialogViewVisible = true;
                 });
             }

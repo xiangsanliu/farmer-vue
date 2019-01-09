@@ -6,11 +6,11 @@
                           @click="router.replace('/land')">
                 土地管理
             </el-menu-item>
-            <el-menu-item index="2" v-if="userType === 1 || userType === 2"
+            <el-menu-item index="2"
                           @click="router.replace('/material')">
                 生产材料
             </el-menu-item>
-            <el-menu-item index="3" v-if="userType === 1 || userType === 2"
+            <el-menu-item index="3"
                           @click="router.replace('/fertilizer')">
                 培肥配药
             </el-menu-item>
@@ -39,7 +39,7 @@
             return {
                 activeIndex: '1',
                 userType: null,
-                username: 'xiangjianjian',
+                username: '未登录',
                 router: this.$router,
             }
         },
@@ -52,12 +52,7 @@
                     _this.userType = user.userType;
                     _this.username = user.username;
                 } else {
-                    _this.$alert('未登录,请先登录!', '提示', {
-                        confirmButtonText: '确定',
-                        callback: function () {
-                            window.location.href = "/login.html";
-                        }
-                    });
+                    _this.handleResponseError(resp, _this);
                 }
             });
             this.router.replace('/land');

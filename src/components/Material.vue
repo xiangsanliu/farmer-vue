@@ -74,33 +74,42 @@
         },
         methods: {
             createPurchaseRecord: function () {
-                this.dialogVisible = false;
-                let data = this.form;
+                let _this = this;
+                _this.dialogVisible = false;
+                let data = _this.form;
                 this.$http.post('/api/createPurchaseRecord', data).then(function (response) {
                     let resp = response.body;
-                    this.$message({
-                        type: 'success',
-                        message: resp.msg
-                    });
-                    if (200 === resp.status) {
-                        this.reloadDate();
-                        this.clearForm();
+                    if (resp && resp.status === 200) {
+                        _this.$message({
+                            type: 'success',
+                            message: resp.msg
+                        });
+                        _this.reloadDate();
+                    } else {
+                        _this.handleResponseError(resp, _this);
                     }
+                    this.clearForm();
                 });
             },
             reloadDate: function () {
+                let _this = this;
                 this.$http.get('/api/getAllMaterialsAndRecords').then(function (response) {
-                    let resp = response.body.content;
-                    let mTemp = resp.materials;
-                    for (let i = 0; i < mTemp.length; i++) {
-                        mTemp[i].price = mTemp[i].price / 100.0;
+                    let resp = response.body;
+                    if (resp && resp.status === 200) {
+                        let mTemp = resp.content.materials;
+                        for (let i = 0; i < mTemp.length; i++) {
+                            mTemp[i].price = mTemp[i].price / 100.0;
+                        }
+                        let pTemp = resp.content.purchaseRecords;
+                        for (let j = 0; j < pTemp.length; j++) {
+                            pTemp[j].price = pTemp[j].price / 100.0;
+                        }
+                        this.purchaseRecords = pTemp;
+                        this.materials = mTemp;
+                    } else {
+                        _this.handleResponseError(resp, _this);
                     }
-                    let pTemp = resp.purchaseRecords;
-                    for (let j = 0; j < pTemp.length; j++) {
-                        pTemp[j].price = pTemp[j].price / 100.0;
-                    }
-                    this.purchaseRecords = pTemp;
-                    this.materials = mTemp;
+
                 });
             },
             clearForm: function () {
@@ -117,13 +126,17 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(function () {
-                    _this.$http.post('/api/removeRecord', rId).then(function (value) {
-                        let resp = value.body;
-                        _this.$message({
-                            type: 'success',
-                            message: resp.msg
-                        });
-                        _this.reloadDate();
+                    _this.$http.post('/api/removeRecord', rId).then(function (response) {
+                        let resp = response.body;
+                        if (resp && resp.status === 200) {
+                            _this.$message({
+                                type: 'success',
+                                message: resp.msg
+                            });
+                            _this.reloadDate();
+                        } else {
+                            _this.handleResponseError(resp, _this);
+                        }
                     })
                 }).catch(function () {
                     _this.$message({

@@ -1,14 +1,16 @@
-import Vue from 'vue'
-import Main from './Main.vue'
-import VueResource from 'vue-resource'
+import Vue from 'vue';
+import Main from './Main.vue';
+import VueResource from 'vue-resource';
 import ElementUI from 'element-ui';
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import 'element-ui/lib/theme-chalk/index.css';
+import {handleResponseError} from "@/utils/common";
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
+Vue.prototype.handleResponseError = handleResponseError;
 
 import Land from './components/Land';
 import Material from './components/Material';
@@ -31,6 +33,7 @@ const router = new VueRouter({
         }
     ]
 });
+
 
 new Vue({
     router: router,

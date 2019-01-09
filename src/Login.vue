@@ -44,7 +44,7 @@
                     username: _this.username,
                     password: _this.password
                 };
-                this.$http.post('/api/login_p', {data: JSON.stringify(data)}).then(function (response) {
+                this.$http.post('/api/login', {data: JSON.stringify(data)}).then(function (response) {
                     let resp = response.body;
                     this.message = resp.msg;
                     if (resp && resp.status === 200) {
