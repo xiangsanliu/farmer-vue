@@ -70,46 +70,32 @@
             }
         },
         created() {
-            this.reloadDate();
+            this.reloadData();
         },
         methods: {
             createPurchaseRecord: function () {
                 let _this = this;
-                _this.dialogVisible = false;
                 let data = _this.form;
-                this.$http.post('/api/createPurchaseRecord', data).then(function (response) {
-                    let resp = response.body;
-                    if (resp && resp.status === 200) {
-                        _this.$message({
-                            type: 'success',
-                            message: resp.msg
-                        });
-                        _this.reloadDate();
-                    } else {
-                        _this.handleResponseError(resp, _this);
-                    }
-                    this.clearForm();
+                _this.dialogVisible = false;
+                _this.httpPost('/api/createPurchaseRecord', data, responseBean => {
+                    _this.$message.success(responseBean.msg);
+                    _this.reloadData();
+                    _this.clearForm();
                 });
             },
-            reloadDate: function () {
+            reloadData: function () {
                 let _this = this;
-                this.$http.get('/api/getAllMaterialsAndRecords').then(function (response) {
-                    let resp = response.body;
-                    if (resp && resp.status === 200) {
-                        let mTemp = resp.content.materials;
-                        for (let i = 0; i < mTemp.length; i++) {
-                            mTemp[i].price = mTemp[i].price / 100.0;
-                        }
-                        let pTemp = resp.content.purchaseRecords;
-                        for (let j = 0; j < pTemp.length; j++) {
-                            pTemp[j].price = pTemp[j].price / 100.0;
-                        }
-                        this.purchaseRecords = pTemp;
-                        this.materials = mTemp;
-                    } else {
-                        _this.handleResponseError(resp, _this);
+                _this.httpGet('/api/getAllMaterialsAndRecords', responseBean => {
+                    let mTemp = responseBean.content.materials;
+                    for (let i = 0; i < mTemp.length; i++) {
+                        mTemp[i].price = mTemp[i].price / 100.0;
                     }
-
+                    let pTemp = responseBean.content.purchaseRecords;
+                    for (let j = 0; j < pTemp.length; j++) {
+                        pTemp[j].price = pTemp[j].price / 100.0;
+                    }
+                    _this.purchaseRecords = pTemp;
+                    _this.materials = mTemp;
                 });
             },
             clearForm: function () {
@@ -119,30 +105,18 @@
                 this.form.purchaseDate = null;
             },
             removeRecord: function (row) {
-                let rId = row.rid;
                 let _this = this;
                 _this.$confirm('此操作将永久删除该记录,是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(function () {
-                    _this.$http.post('/api/removeRecord', rId).then(function (response) {
-                        let resp = response.body;
-                        if (resp && resp.status === 200) {
-                            _this.$message({
-                                type: 'success',
-                                message: resp.msg
-                            });
-                            _this.reloadDate();
-                        } else {
-                            _this.handleResponseError(resp, _this);
-                        }
+                    _this.httpPost('/api/removeRecord', {rId: row.rid}, responseBean => {
+                        _this.$message.success(responseBean.msg);
+                        _this.reloadData();
                     })
                 }).catch(function () {
-                    _this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
+                    _this.$message.info('已取消删除');
                 });
             }
         }

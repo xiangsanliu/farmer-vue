@@ -110,20 +110,16 @@
             }
         },
         created() {
-            this.reloadDate();
+            this.reloadData();
         },
         methods: {
-            reloadDate: function () {
+            reloadData: function () {
                 let _this = this;
-                this.$http.get('/api/getAllFertilizersAndIngredients').then(function (response) {
-                    let resp = response.body;
-                    if (resp && resp.status === 200) {
-                        _this.ingredients = resp.content.ingredients;
-                        _this.fertilizers = resp.content.fertilizers;
-                    } else {
-                        _this.handleResponseError(resp, _this);
-                    }
-                })
+
+                _this.httpGet('/api/getAllFertilizersAndIngredients', responseBean => {
+                    _this.ingredients = responseBean.content.ingredients;
+                    _this.fertilizers = responseBean.content.fertilizers;
+                });
             },
             clearForm: function () {
                 this.form.fName = '';
@@ -162,61 +158,34 @@
                 this.form.ingredients.splice(index, 1);
             },
             createFI: function () {
-                this.dialogVisible = false;
-                let data = this.form;
                 let _this = this;
-                this.$http.post('/api/createFI', data).then(function (response) {
-                    let resp = response.body;
-                    if (resp && resp.status === 200) {
-                        _this.$message({
-                            type: 'success',
-                            message: resp.msg
-                        });
-                        _this.reloadDate();
-                    } else {
-                        _this.handleResponseError(resp, _this);
-                    }
+                _this.dialogVisible = false;
+                _this.httpPost('/api/createFI', _this.form, responseBean => {
+                    _this.$message.success(responseBean.msg);
+                    _this.reloadData();
                     _this.clearForm();
                 });
             },
             removeFI: function (row) {
-                let fId = row.id;
                 let _this = this;
                 _this.$confirm('此操作将永久删除该记录,是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(function () {
-                    _this.$http.post('/api/removeFI', fId).then(function (response) {
-                        let resp = response.body;
-                        if (resp && resp.status === 200) {
-                            _this.$message({
-                                type: 'success',
-                                message: resp.msg
-                            });
-                            _this.reloadDate();
-                        } else {
-                            _this.handleResponseError(resp, _this);
-                        }
-
-                    })
-                }).catch(function () {
-                    _this.$message({
-                        type: 'info',
-                        message: '已取消删除'
+                    _this.httpPost('/api/removeFI', {fId: row.id}, responseBean => {
+                        _this.$message.success(responseBean.msg);
+                        _this.reloadData();
                     });
+                }).catch(function () {
+                    _this.$message.info('已取消删除');
                 });
             },
             viewIngredient: function (row) {
                 let _this = this;
                 _this.ingredientsFromFertilizer = null;
-                this.$http.post('/api/getIngredientsByFertilizer', row.id).then(function (response) {
-                    let resp = response.body;
-                    if (resp && resp.status === 200) {
-                        this.ingredientsFromFertilizer = resp.content;
-                    } else {
-                        _this.handleResponseError(resp, _this);
-                    }
+                _this.httpPost('/api/getIngredientsByFertilizer', {fId: row.id}, responseBean => {
+                    this.ingredientsFromFertilizer = responseBean.content;
                     this.dialogViewVisible = true;
                 });
             }

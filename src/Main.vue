@@ -45,23 +45,18 @@
         },
         created() {
             let _this = this;
-            this.$http.get('/api/initUser').then(function (response) {
-                let resp = response.body;
-                if (resp && resp.status === 200) {
-                    let user = resp.content;
-                    _this.userType = user.userType;
-                    _this.username = user.username;
-                } else {
-                    _this.handleResponseError(resp, _this);
-                }
+            _this.httpGet('/api/initUser', responseBean => {
+                let user = responseBean.content;
+                _this.userType = user.userType;
+                _this.username = user.username;
+                _this.router.replace('/land');
             });
-            this.router.replace('/land');
         },
         methods: {
             logout: function () {
-                this.$http.get('/api/logout').then(function () {
+                this.httpGet('/api/logout', () => {
                     window.location.href = '/login.html';
-                })
+                });
             }
         }
     }
