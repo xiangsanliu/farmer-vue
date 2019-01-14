@@ -1,29 +1,19 @@
 <template>
     <div id="login">
         <div class="header">
-            <div class="am-g">
-                <h1>小农夫</h1>
-            </div>
-            <hr/>
+            <h1>小农夫</h1>
         </div>
-        <div class="am-g" id="app">
-            <div class="am-u-lg-6 am-u-md-8 am-u-sm-centered">
-                <span style="color: red;"> {{ message }} </span>
-                <br>
-                <br>
-                <form method="post" class="am-form">
-                    <label for="username">账号:</label>
-                    <input type="text" id="username" v-model="username">
-                    <br>
-                    <label for="password">密码:</label>
-                    <input type="password" id="password" v-model="password">
-                    <br>
-                    <br/>
-                </form>
-                <button class="am-btn am-btn-primary am-btn-sm am-fl" @click="submitClick">登录</button>
-                <hr>
-            </div>
-        </div>
+        <el-form label-width="15%" ref="form" class="login-container">
+            <el-form-item label="账号：">
+                <el-input type="text" id="username" v-model="username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码：">
+                <el-input type="password" id="password" v-model="password"></el-input>
+            </el-form-item>
+            <el-form-item style="text-align: right">
+                <el-button type="primary" @click="submitClick">登录</el-button>
+            </el-form-item>
+        </el-form>
     </div>
 </template>
 
@@ -32,7 +22,6 @@
         name: "Login",
         data() {
             return {
-                message: '',
                 username: 'guest',
                 password: ''
             }
@@ -44,12 +33,10 @@
                     username: _this.username,
                     password: _this.password
                 };
-                this.$http.post('/api/login', {data: JSON.stringify(data)}).then(function (response) {
-                    let resp = response.body;
-                    this.message = resp.msg;
-                    if (resp && resp.status === 200) {
-                        window.location.href = "/index.html";
-                    }
+                _this.httpPost("/api/login", data, () => {
+                    window.location.href = "/index.html";
+                }, responseBean => {
+                    _this.$message.error(responseBean.msg);
                 })
             }
         }
@@ -67,7 +54,8 @@
         margin-top: 30px;
     }
 
-    .header p {
-        font-size: 14px;
+    .login-container {
+        padding: 4% 35% 0 33%;
     }
+
 </style>

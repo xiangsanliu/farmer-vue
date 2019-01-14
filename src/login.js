@@ -1,8 +1,11 @@
-import Vue from 'vue'
-import VueResource from 'vue-resource'
+import Vue from 'vue';
 import Login from "./Login.vue";
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import {httpPost} from "@/utils/api";
 
-Vue.use(VueResource);
+Vue.use(ElementUI);
+Vue.prototype.httpPost = httpPost;
 
 new Vue({
     render: h => h(Login)

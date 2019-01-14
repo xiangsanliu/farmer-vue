@@ -19,10 +19,11 @@ export const httpGet = (url, onSuccess) => {
  * @param url url
  * @param postData Post Data
  * @param onSuccess Success Callback
+ * @param onFailure Failure Callback
  */
-export const httpPost = (url, postData, onSuccess) => {
+export const httpPost = (url, postData, onSuccess, onFailure) => {
     axios.post(url, postData).then(response => {
-        handleResponseBean(response.data, onSuccess);
+        handleResponseBean(response.data, onSuccess, onFailure);
     }).catch(error => {
         Message.error(error.response.data);
     })
@@ -32,8 +33,9 @@ export const httpPost = (url, postData, onSuccess) => {
  * Handle Response From SpringBoot
  * @param responseBean Defined in SpringBoot: ResponseBean.class
  * @param onSuccess Success Callback
+ * @param onFailure Failure Callback
  */
-const handleResponseBean = (responseBean, onSuccess) => {
+const handleResponseBean = (responseBean, onSuccess, onFailure) => {
     if (200 === responseBean.status) {
         onSuccess(responseBean);
     } else if (401 === responseBean.status) {
@@ -45,5 +47,7 @@ const handleResponseBean = (responseBean, onSuccess) => {
         });
     } else if (403 === responseBean.status) {
         Message.error('无此权限');
+    } else {
+        onFailure(responseBean);
     }
 };
