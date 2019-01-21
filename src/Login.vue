@@ -30,9 +30,11 @@
             submitClick: () => {
                 let _this = this;
                 let data = {
-                    username: _this.username,
-                    password: _this.password
+                    username: this.username,
+                    password: this.password
                 };
+                _this.httpPost("/api/login", data, () => {
+                    window.locatio
                 _this.httpPost("/api/login", data, () => {
                     window.location.href = "/index.html";
                 }, responseBean => {
