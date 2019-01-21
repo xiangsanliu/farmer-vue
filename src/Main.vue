@@ -55,7 +55,7 @@
             });
         },
         methods: {
-            logout: () => {
+            logout: function () {
                 this.httpGet('/api/logout', () => {
                     window.location.href = '/login.html';
                 });

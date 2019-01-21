@@ -113,14 +113,14 @@
             this.reloadData();
         },
         methods: {
-            reloadData: () => {
+            reloadData: function () {
                 let _this = this;
                 _this.httpGet('/api/getAllFertilizersAndIngredients', responseBean => {
                     _this.ingredients = responseBean.content.ingredients;
                     _this.fertilizers = responseBean.content.fertilizers;
                 });
             },
-            clearForm: () => {
+            clearForm: function () {
                 this.form.fName = '';
                 this.form.fDate = null;
                 this.form.fee = 0;
@@ -150,10 +150,10 @@
                 this.form.ingredients.push(temp);
                 this.dialogIngredientVisible = false;
             },
-            removeIngredient: index => {
+            removeIngredient: function (index) {
                 this.form.ingredients.splice(index, 1);
             },
-            createFI: () => {
+            createFI: function () {
                 let _this = this;
                 _this.dialogVisible = false;
                 _this.httpPost('/api/createFI', _this.form, responseBean => {
@@ -162,7 +162,7 @@
                     _this.clearForm();
                 });
             },
-            removeFI: row => {
+            removeFI: function (row) {
                 let _this = this;
                 _this.$confirm('此操作将永久删除该记录,是否继续?', '提示', {
                     confirmButtonText: '确定',
@@ -177,7 +177,7 @@
                     _this.$message.info('已取消删除');
                 });
             },
-            viewIngredient: row => {
+            viewIngredient: function (row) {
                 let _this = this;
                 _this.ingredientsFromFertilizer = null;
                 _this.httpPost('/api/getIngredientsByFertilizer', {fId: row.id}, responseBean => {

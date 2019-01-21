@@ -73,7 +73,7 @@
             this.reloadData();
         },
         methods: {
-            createPurchaseRecord: () => {
+            createPurchaseRecord: function () {
                 let _this = this;
                 let data = _this.form;
                 _this.dialogVisible = false;
@@ -83,7 +83,7 @@
                     _this.clearForm();
                 });
             },
-            reloadData: () => {
+            reloadData: function () {
                 let _this = this;
                 _this.httpGet('/api/getAllMaterialsAndRecords', responseBean => {
                     let mTemp = responseBean.content.materials;
@@ -98,13 +98,13 @@
                     _this.materials = mTemp;
                 });
             },
-            clearForm: () => {
+            clearForm: function () {
                 this.form.materialName = '';
                 this.form.amount = 0;
                 this.form.remarks = '';
                 this.form.purchaseDate = null;
             },
-            removeRecord: row => {
+            removeRecord: function (row) {
                 let _this = this;
                 _this.$confirm('此操作将永久删除该记录,是否继续?', '提示', {
                     confirmButtonText: '确定',
