@@ -1,5 +1,6 @@
 module.exports = {
     devServer: {
+        disableHostCheck: true,
         proxy: {
             '/api': {
                 // target: 'http://119.28.179.36:8081',
