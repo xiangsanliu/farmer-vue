@@ -73,7 +73,7 @@
             this.reloadData();
         },
         methods: {
-            createPurchaseRecord: function () {
+            createPurchaseRecord: () => {
                 let _this = this;
                 let data = _this.form;
                 _this.dialogVisible = false;
@@ -83,7 +83,7 @@
                     _this.clearForm();
                 });
             },
-            reloadData: function () {
+            reloadData: () => {
                 let _this = this;
                 _this.httpGet('/api/getAllMaterialsAndRecords', responseBean => {
                     let mTemp = responseBean.content.materials;
@@ -98,24 +98,24 @@
                     _this.materials = mTemp;
                 });
             },
-            clearForm: function () {
+            clearForm: () => {
                 this.form.materialName = '';
                 this.form.amount = 0;
                 this.form.remarks = '';
                 this.form.purchaseDate = null;
             },
-            removeRecord: function (row) {
+            removeRecord: row => {
                 let _this = this;
                 _this.$confirm('此操作将永久删除该记录,是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
-                }).then(function () {
+                }).then(() => {
                     _this.httpPost('/api/removeRecord', {rId: row.rid}, responseBean => {
                         _this.$message.success(responseBean.msg);
                         _this.reloadData();
                     })
-                }).catch(function () {
+                }).catch(() => {
                     _this.$message.info('已取消删除');
                 });
             }

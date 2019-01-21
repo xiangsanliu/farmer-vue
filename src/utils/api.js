@@ -48,6 +48,7 @@ const handleResponseBean = (responseBean, onSuccess, onFailure) => {
     } else if (403 === responseBean.status) {
         Message.error('无此权限');
     } else {
+        // 自定义处理错误方式
         onFailure(responseBean);
     }
 };

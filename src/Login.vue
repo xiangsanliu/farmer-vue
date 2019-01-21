@@ -27,7 +27,7 @@
             }
         },
         methods: {
-            submitClick: function () {
+            submitClick: () => {
                 let _this = this;
                 let data = {
                     username: _this.username,

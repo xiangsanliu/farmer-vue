@@ -40,7 +40,7 @@
                 activeIndex: '1',
                 userType: null,
                 username: '未登录',
-                router: this.$router,
+                router: this.$router
             }
         },
         created() {
@@ -50,10 +50,12 @@
                 _this.userType = user.userType;
                 _this.username = user.username;
                 _this.router.replace('/land');
+                /* eslint no-console: ["error", {allow: ["warn","error"]}] */
+                console.warn('xiang');
             });
         },
         methods: {
-            logout: function () {
+            logout: () => {
                 this.httpGet('/api/logout', () => {
                     window.location.href = '/login.html';
                 });

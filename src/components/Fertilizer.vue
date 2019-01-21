@@ -113,15 +113,14 @@
             this.reloadData();
         },
         methods: {
-            reloadData: function () {
+            reloadData: () => {
                 let _this = this;
-
                 _this.httpGet('/api/getAllFertilizersAndIngredients', responseBean => {
                     _this.ingredients = responseBean.content.ingredients;
                     _this.fertilizers = responseBean.content.fertilizers;
                 });
             },
-            clearForm: function () {
+            clearForm: () => {
                 this.form.fName = '';
                 this.form.fDate = null;
                 this.form.fee = 0;
@@ -131,10 +130,7 @@
             addIngredient: function () {
                 for (let j = 0; j < this.form.ingredients.length; j++) {
                     if (this.ingredient.id === this.form.ingredients[j].id) {
-                        this.$message({
-                            type: 'info',
-                            message: '已添加该原料'
-                        });
+                        this.$message.info('已添加该原料');
                         this.dialogIngredientVisible = false;
                         return;
                     }
@@ -154,10 +150,10 @@
                 this.form.ingredients.push(temp);
                 this.dialogIngredientVisible = false;
             },
-            removeIngredient: function (index) {
+            removeIngredient: index => {
                 this.form.ingredients.splice(index, 1);
             },
-            createFI: function () {
+            createFI: () => {
                 let _this = this;
                 _this.dialogVisible = false;
                 _this.httpPost('/api/createFI', _this.form, responseBean => {
@@ -166,22 +162,22 @@
                     _this.clearForm();
                 });
             },
-            removeFI: function (row) {
+            removeFI: row => {
                 let _this = this;
                 _this.$confirm('此操作将永久删除该记录,是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
-                }).then(function () {
+                }).then(() => {
                     _this.httpPost('/api/removeFI', {fId: row.id}, responseBean => {
                         _this.$message.success(responseBean.msg);
                         _this.reloadData();
                     });
-                }).catch(function () {
+                }).catch(() => {
                     _this.$message.info('已取消删除');
                 });
             },
-            viewIngredient: function (row) {
+            viewIngredient: row => {
                 let _this = this;
                 _this.ingredientsFromFertilizer = null;
                 _this.httpPost('/api/getIngredientsByFertilizer', {fId: row.id}, responseBean => {
