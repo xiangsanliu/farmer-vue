@@ -34,12 +34,10 @@
                     password: this.password
                 };
                 _this.httpPost("/api/login", data, () => {
-                    window.locatio
-                _this.httpPost("/api/login", data, () => {
                     window.location.href = "/index.html";
                 }, responseBean => {
                     _this.$message.error(responseBean.msg);
-                })
+                });
             }
         }
     }
