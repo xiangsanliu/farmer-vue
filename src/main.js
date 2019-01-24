@@ -11,28 +11,49 @@ Vue.config.productionTip = false;
 Vue.prototype.httpGet = httpGet;
 Vue.prototype.httpPost = httpPost;
 
-import Land from './components/Land';
-import Material from './components/Material';
-import Fertilizer from './components/Fertilizer';
+import Login from './components/Login';
+import Navigation from './components/Navigation';
+import Home from './components/nav/Home';
+import Land from './components/nav/Land';
+import Material from './components/nav/Material';
+import Fertilizer from './components/nav/Fertilizer';
 
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: '/land',
-            component: Land
+            path: '/login',
+            component: Login
         },
         {
-            path: '/material',
-            component: Material
+            path: '/navigation',
+            component: Navigation,
+            children: [
+                {
+                    path: '',
+                    component: Home
+                },
+                {
+                    path: 'land',
+                    component: Land
+                },
+                {
+                    path: 'material',
+                    component: Material
+                },
+                {
+                    path: 'fertilizer',
+                    component: Fertilizer
+                }
+            ]
         },
+        // 这里捕捉 404 页面，暂时先用登录页面顶着
         {
-            path: '/fertilizer',
-            component: Fertilizer
+            path: '/*',
+            component: Login
         }
     ]
 });
-
 
 new Vue({
     router: router,

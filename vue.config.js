@@ -21,11 +21,6 @@ module.exports = {
             template: 'public/index.html',
             // output as dist/index.html
             filename: 'index.html'
-        },
-        login: {
-            entry: 'src/login.js',
-            template: 'public/login.html',
-            filename: 'login.html'
         }
     }
 };

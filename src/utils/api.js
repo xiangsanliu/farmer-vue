@@ -42,7 +42,7 @@ const handleResponseBean = (responseBean, onSuccess, onFailure) => {
         MessageBox.alert('未登录,请先登录!', '提示', {
             confirmButtonText: '确定',
             callback: function () {
-                window.location.href = "/login.html";
+                window.location.href = "/login";
             }
         });
     } else if (403 === responseBean.status) {

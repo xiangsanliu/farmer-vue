@@ -22,6 +22,7 @@
         name: "Login",
         data() {
             return {
+                router: this.$router,
                 username: 'guest',
                 password: ''
             }
@@ -34,7 +35,7 @@
                     password: this.password
                 };
                 _this.httpPost("/api/login", data, () => {
-                    window.location.href = "/index.html";
+                    _this.router.replace('/navigation');
                 }, responseBean => {
                     _this.$message.error(responseBean.msg);
                 });
