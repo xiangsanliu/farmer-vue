@@ -4,19 +4,18 @@ import ElementUI from 'element-ui';
 import VueRouter from 'vue-router';
 import 'element-ui/lib/theme-chalk/index.css';
 import {httpGet, httpPost} from "@/utils/api";
-
-Vue.use(VueRouter);
-Vue.use(ElementUI);
-Vue.config.productionTip = false;
-Vue.prototype.httpGet = httpGet;
-Vue.prototype.httpPost = httpPost;
-
 import Login from './components/Login';
 import Navigation from './components/Navigation';
 import Home from './components/nav/Home';
 import Land from './components/nav/Land';
 import Material from './components/nav/Material';
 import Fertilizer from './components/nav/Fertilizer';
+
+Vue.use(VueRouter);
+Vue.use(ElementUI);
+Vue.config.productionTip = false;
+Vue.prototype.httpGet = httpGet;
+Vue.prototype.httpPost = httpPost;
 
 const router = new VueRouter({
     mode: 'history',
