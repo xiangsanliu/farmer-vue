@@ -2,17 +2,17 @@
     <div id="material">
         <el-container>
             <el-main>
-                <el-button @click="dialogVisible = true" type="primary" plain>添加购买记录</el-button>
+                <el-button @click="dialogVisible = true" plain type="primary">添加购买记录</el-button>
                 <el-table :data="purchaseRecords"
                           style="width: 100%;">
-                    <el-table-column label="购买日期" sortable prop="purchaseDate" width="180"></el-table-column>
+                    <el-table-column label="购买日期" prop="purchaseDate" sortable width="180"></el-table-column>
                     <el-table-column label="材料名称" prop="materialName"></el-table-column>
-                    <el-table-column label="单价(种子为g/￥, 原料为kg/￥)" sortable prop="price"></el-table-column>
+                    <el-table-column label="单价(种子为g/￥, 原料为kg/￥)" prop="price" sortable></el-table-column>
                     <el-table-column label="数量" prop="amount"></el-table-column>
                     <el-table-column label="备注" prop="remarks"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="removeRecord(scope.row)" type="danger" size="small" plain>删除</el-button>
+                            <el-button @click="removeRecord(scope.row)" plain size="small" type="danger">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>

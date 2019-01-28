@@ -3,15 +3,15 @@
         <div class="header">
             <h1>小农夫</h1>
         </div>
-        <el-form label-width="15%" ref="form" class="login-container">
+        <el-form class="login-container" label-width="15%" ref="form">
             <el-form-item label="账号：">
-                <el-input type="text" id="username" v-model="username"></el-input>
+                <el-input id="username" type="text" v-model="username"></el-input>
             </el-form-item>
             <el-form-item label="密码：">
-                <el-input type="password" id="password" v-model="password"></el-input>
+                <el-input id="password" type="password" v-model="password"></el-input>
             </el-form-item>
             <el-form-item style="text-align: right">
-                <el-button type="primary" @click="submitClick">登录</el-button>
+                <el-button @click="submitClick" type="primary">登录</el-button>
             </el-form-item>
         </el-form>
     </div>

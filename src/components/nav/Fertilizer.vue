@@ -2,17 +2,17 @@
     <div id="fertilizer">
         <el-container>
             <el-main>
-                <el-button @click="dialogVisible = true" type="primary" plain>添加培肥配药</el-button>
+                <el-button @click="dialogVisible = true" plain type="primary">添加培肥配药</el-button>
                 <el-table :data="fertilizers" style="width: 100%;">
-                    <el-table-column prop="fdate" label="日期" sortable></el-table-column>
-                    <el-table-column prop="fname" label="名称"></el-table-column>
-                    <el-table-column prop="fee" label="劳务费(元)"></el-table-column>
-                    <el-table-column prop="lossRate" label="总质量损失率(%)"></el-table-column>
+                    <el-table-column label="日期" prop="fdate" sortable></el-table-column>
+                    <el-table-column label="名称" prop="fname"></el-table-column>
+                    <el-table-column label="劳务费(元)" prop="fee"></el-table-column>
+                    <el-table-column label="总质量损失率(%)" prop="lossRate"></el-table-column>
                     <el-table-column label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="viewIngredient(scope.row)" type="primary" size="small" plain>查看配料
+                            <el-button @click="viewIngredient(scope.row)" plain size="small" type="primary">查看配料
                             </el-button>
-                            <el-button @click="removeFI(scope.row)" type="danger" size="small" plain>删除</el-button>
+                            <el-button @click="removeFI(scope.row)" plain size="small" type="danger">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -38,7 +38,7 @@
                             <el-table-column label="数量" prop="amount"></el-table-column>
                             <el-table-column label="操作">
                                 <template slot-scope="scope">
-                                    <el-button @click="removeIngredient(scope.$index)" type="danger" size="small">删除
+                                    <el-button @click="removeIngredient(scope.$index)" size="small" type="danger">删除
                                     </el-button>
                                 </template>
                             </el-table-column>

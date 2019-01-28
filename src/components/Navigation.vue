@@ -1,20 +1,20 @@
 <template>
     <div id="navigation">
-        <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" active-text-color="#ffffff"
-                 background-color="#324057" text-color="#cbcfd4">
-            <el-menu-item index="1" @click="router.replace('/navigation')">
+        <el-menu :default-active="activeIndex" active-text-color="#ffffff" background-color="#324057" class="el-menu"
+                 mode="horizontal" text-color="#cbcfd4">
+            <el-menu-item @click="router.replace('/navigation')" index="1">
                 主页
             </el-menu-item>
-            <el-menu-item index="2" v-if="userType === 1 || userType === 2"
-                          @click="router.replace('/navigation/land')">
+            <el-menu-item @click="router.replace('/navigation/land')" index="2"
+                          v-if="userType === 1 || userType === 2">
                 土地管理
             </el-menu-item>
-            <el-menu-item index="3"
-                          @click="router.replace('/navigation/material')">
+            <el-menu-item @click="router.replace('/navigation/material')"
+                          index="3">
                 生产材料
             </el-menu-item>
-            <el-menu-item index="4"
-                          @click="router.replace('/navigation/fertilizer')">
+            <el-menu-item @click="router.replace('/navigation/fertilizer')"
+                          index="4">
                 培肥配药
             </el-menu-item>
             <el-menu-item index="5">
