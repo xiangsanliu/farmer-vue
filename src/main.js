@@ -3,7 +3,7 @@ import Main from './Main.vue';
 import ElementUI from 'element-ui';
 import VueRouter from 'vue-router';
 import 'element-ui/lib/theme-chalk/index.css';
-import {httpGet, httpPost} from "@/utils/api";
+import {httpGet, httpPost} from "./utils/http";
 import Login from './components/Login';
 import Navigation from './components/Navigation';
 import Home from './components/nav/Home';

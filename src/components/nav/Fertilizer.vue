@@ -128,12 +128,13 @@
                 this.form.ingredients = [];
             },
             addIngredient: function () {
-                for (let j = 0; j < this.form.ingredients.length; j++) {
-                    if (this.ingredient.id === this.form.ingredients[j].id) {
-                        this.$message.info('已添加该原料');
-                        this.dialogIngredientVisible = false;
-                        return;
-                    }
+                let added = this.form.ingredients.some(item => {
+                    return this.ingredient.id === item.id;
+                });
+                if (added) {
+                    this.$message.info('已添加该原料');
+                    this.dialogIngredientVisible = false;
+                    return;
                 }
                 for (let i = 0; i < this.ingredients.length; i++) {
                     if (this.ingredient.id === this.ingredients[i].id) {
